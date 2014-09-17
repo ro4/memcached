@@ -1,4 +1,5 @@
 /* -*- Mode: C; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
+/*在文件开头标注格式*/
 /*
  *  memcached - memory caching daemon
  *
