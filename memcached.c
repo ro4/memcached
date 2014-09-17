@@ -59,7 +59,7 @@
 /*
  * forward declarations
  */
-static void drive_machine(conn *c);
+static void drive_machine(conn *c); /*conn 参见memcached.h 405行左右*/
 static int new_socket(struct addrinfo *ai);
 static int try_read_command(conn *c);
 
@@ -129,10 +129,10 @@ static enum transmit_result transmit(conn *c);
  * Also, the clock timer could be broken out into its own thread and we
  * can block the listener via a condition.
  */
-static volatile bool allow_new_conns = true;
+static volatile bool allow_new_conns = true; /*volatile 修饰符在c中的意思就是易变的，让编译器不要自以为是的以为该变量不变而进行优化*/
 static struct event maxconnsevent;
 static void maxconns_handler(const int fd, const short which, void *arg) {
-    struct timeval t = {.tv_sec = 0, .tv_usec = 10000};
+    struct timeval t = {.tv_sec = 0, .tv_usec = 10000}; /*c在变量前加点是给结构体成员赋值*/
 
     if (fd == -42 || allow_new_conns == false) {
         /* reschedule in 10ms if we need to keep polling */
@@ -145,7 +145,7 @@ static void maxconns_handler(const int fd, const short which, void *arg) {
     }
 }
 
-#define REALTIME_MAXDELTA 60*60*24*30
+#define REALTIME_MAXDELTA 60*60*24*30  /*一个月*/
 
 /*
  * given time value that's either unix time or delta from current unix time, return
@@ -288,7 +288,7 @@ static int add_msghdr(conn *c)
 
     return 0;
 }
-
+/*待续--方便以后接着读的标记*/
 extern pthread_mutex_t conn_lock;
 
 /*
