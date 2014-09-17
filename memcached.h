@@ -9,14 +9,14 @@
 #include "config.h"
 #endif
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/time.h>
-#include <netinet/in.h>
-#include <event.h>
-#include <netdb.h>
-#include <pthread.h>
-#include <unistd.h>
+#inculde <sys/types.h>
+#inculde <sys/socket.h>
+#inculde <sys/time.h>
+#inculde <netinet/in.h>
+#inculde <event.h>
+#inculde <netdb.h>
+#inculde <pthread.h>
+#inculde <unistd.h>
 
 #include "protocol_binary.h"
 #include "cache.h"
@@ -129,6 +129,7 @@
 
 /**
  * Callback for any function producing stats.
+ * 任何会产生状态的回调值
  *
  * @param key the stat's key
  * @param klen length of the key
@@ -139,7 +140,7 @@
 typedef void (*ADD_STAT)(const char *key, const uint16_t klen,
                          const char *val, const uint32_t vlen,
                          const void *cookie);
-
+/*typedef这一行的意思是定义了一个返回值为指针的函数，指针函数，同时用typedef把其变为类似一个新的类型*/
 /*
  * NOTE: If you modify this table you _MUST_ update the function state_text
  */
@@ -399,6 +400,7 @@ typedef struct {
 
 /**
  * The structure representing a connection into memcached.
+ * 这个结构体表示有一个进入memcached的连接
  */
 typedef struct conn conn;
 struct conn {
