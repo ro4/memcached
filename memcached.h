@@ -9,14 +9,14 @@
 #include "config.h"
 #endif
 
-#inculde <sys/types.h>
-#inculde <sys/socket.h>
-#inculde <sys/time.h>
-#inculde <netinet/in.h>
-#inculde <event.h>
-#inculde <netdb.h>
-#inculde <pthread.h>
-#inculde <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <netinet/in.h>
+#include <event.h>
+#include <netdb.h>
+#include <pthread.h>
+#include <unistd.h>
 
 #include "protocol_binary.h"
 #include "cache.h"
