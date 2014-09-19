@@ -288,7 +288,7 @@ static int add_msghdr(conn *c)
 
     return 0;
 }
-/*待续--方便以后接着读的标记*/
+
 extern pthread_mutex_t conn_lock;
 
 /*
@@ -296,7 +296,8 @@ extern pthread_mutex_t conn_lock;
  * structures until they're needed, so as to avoid wasting memory when the
  * maximum connection count is much higher than the actual number of
  * connections.
- *
+ * 初始化链接数组，但是并不真正的分配链接结构体除非程序真的需要。这样可以避免
+ * 内存浪费。
  * This does end up wasting a few pointers' worth of memory for FDs that are
  * used for things other than connections, but that's worth it in exchange for
  * being able to directly index the conns array by FD.
@@ -313,7 +314,7 @@ static void conn_init(void) {
     if (getrlimit(RLIMIT_NOFILE, &rl) == 0) {
         max_fds = rl.rlim_max;
     } else {
-        fprintf(stderr, "Failed to query maximum file descriptor; "
+        fprintf(stderr, "Failed to query maximum file descriptor; " /*stderr标准错误流*/
                         "falling back to maxconns\n");
     }
 
@@ -330,13 +331,13 @@ static const char *prot_text(enum protocol prot) {
     char *rv = "unknown";
     switch(prot) {
         case ascii_prot:
-            rv = "ascii";
+            rv = "ascii"; /*ascii值*/
             break;
         case binary_prot:
-            rv = "binary";
+            rv = "binary"; /*二进制*/
             break;
         case negotiating_prot:
-            rv = "auto-negotiate";
+            rv = "auto-negotiate"; /*自动分配*/
             break;
     }
     return rv;
@@ -348,7 +349,7 @@ conn *conn_new(const int sfd, enum conn_states init_state,
                 struct event_base *base) {
     conn *c;
 
-    assert(sfd >= 0 && sfd < max_fds);
+    assert(sfd >= 0 && sfd < max_fds); /*断言只在debug时候有用*/
     c = conns[sfd];
 
     if (NULL == c) {
@@ -481,6 +482,7 @@ conn *conn_new(const int sfd, enum conn_states init_state,
 
     return c;
 }
+/*待续*/
 
 static void conn_release_items(conn *c) {
     assert(c != NULL);
