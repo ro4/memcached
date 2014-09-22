@@ -482,7 +482,6 @@ conn *conn_new(const int sfd, enum conn_states init_state,
 
     return c;
 }
-/*待续*/
 
 static void conn_release_items(conn *c) {
     assert(c != NULL);
@@ -604,8 +603,15 @@ static void conn_shrink(conn *c) {
 
         if (c->rcurr != c->rbuf)
             memmove(c->rbuf, c->rcurr, (size_t)c->rbytes);
+        /*
+        头文件：#include <string.h>
 
-        newbuf = (char *)realloc((void *)c->rbuf, DATA_BUFFER_SIZE);
+定义函数：void * memmove(void *dest, const void *src, size_t n);
+
+函数说明：memmove()与memcpy()一样都是用来拷贝 src 所指的内存内容前n 个字节到dest 所指的地址上。不同的是，当src 和dest 所指的内存区域重叠时，memmove()仍然可以正确的处理，不过执行效率上会比使用memcpy()略慢些。
+         */
+
+        newbuf = (char *)realloc((void *)c->rbuf, DATA_BUFFER_SIZE); /*realloc 重新申请新的内存*/
 
         if (newbuf) {
             c->rbuf = newbuf;
@@ -645,6 +651,7 @@ static void conn_shrink(conn *c) {
 
 /**
  * Convert a state name to a human readable form.
+ * 程序中应该注意对人类阅读友好
  */
 static const char *state_text(enum conn_states state) {
     const char* const statenames[] = { "conn_listening",
@@ -666,7 +673,7 @@ static const char *state_text(enum conn_states state) {
  * processing that needs to happen on certain state transitions can
  * happen here.
  */
-static void conn_set_state(conn *c, enum conn_states state) {
+static void conn_set_state(conn *c, enum conn_states state) {//待续
     assert(c != NULL);
     assert(state >= conn_listening && state < conn_max_state);
 
